@@ -15,10 +15,41 @@ export default function LoginButton() {
 
     try {
 
-      await signInWithPopup(
-        auth,
-        provider
-      );
+      const result =
+        await signInWithPopup(
+          auth,
+          provider
+        );
+
+      const user =
+        result.user;
+
+      if (
+        window.alloy &&
+        user?.email
+      ) {
+
+        await window.alloy(
+          "sendEvent",
+          {
+            xdm: {
+              eventType:
+                "user.login",
+
+              identityMap: {
+                "TEST-Vipul": [
+                  {
+                    id: user.email,
+                    authenticatedState:
+                      "authenticated",
+                    primary: true,
+                  },
+                ],
+              },
+            },
+          }
+        );
+      }
 
     } catch (err) {
 
