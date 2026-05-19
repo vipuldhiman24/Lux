@@ -12,18 +12,25 @@ import { FcGoogle } from "react-icons/fc";
 export default function LoginButton() {
 
   const login = async () => {
-    try {
-      await signInWithPopup(
-        auth,
-        provider
-      );
-    } catch (err) {
-      console.error(
-        "Login Error:",
-        err
-      );
-    }
-  };
+  try {
+    console.log("Login component triggered");
+
+    await signInWithPopup(
+      auth,
+      provider
+    );
+
+    console.log(
+      "Google login completed successfully"
+    );
+
+  } catch (err) {
+    console.error(
+      "Login Error:",
+      err
+    );
+  }
+};
 
   return (
     <button
