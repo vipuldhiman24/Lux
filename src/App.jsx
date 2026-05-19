@@ -33,54 +33,57 @@ export default function App() {
             user?.email
           );
 
-          if (
-            user?.email &&
-            window.alloy
-          ) {
-            try {
+          if (!user?.email) {
+            return;
+          }
 
-              console.log(
-                "Sending Adobe identity..."
-              );
+          try {
 
-              await window.alloy(
-                "sendEvent",
-                {
-                  xdm: {
-                    eventType:
-                      "user.login",
+            // Wait until Adobe Web SDK is fully ready
+            const alloy =
+              await window.waitForAlloyReady();
 
-                    identityMap: {
-                      "TEST-Vipul": [
-                        {
-                          id:
-                            user.email,
-                          authenticatedState:
-                            "authenticated",
-                          primary: true,
-                        },
-                      ],
-                    },
+            console.log(
+              "Alloy is ready"
+            );
+
+            await alloy(
+              "sendEvent",
+              {
+                xdm: {
+                  eventType:
+                    "user.login",
+
+                  identityMap: {
+                    "TEST-Vipul": [
+                      {
+                        id:
+                          user.email,
+                        authenticatedState:
+                          "authenticated",
+                        primary: true,
+                      },
+                    ],
                   },
+                },
 
-                  data: {
-                    debugEvent:
-                      "google-login",
-                  },
-                }
-              );
+                data: {
+                  debugEvent:
+                    "google-login",
+                },
+              }
+            );
 
-              console.log(
-                "Adobe identity sent successfully"
-              );
+            console.log(
+              "Adobe identity sent successfully"
+            );
 
-            } catch (error) {
+          } catch (error) {
 
-              console.error(
-                "Adobe Web SDK Error:",
-                error
-              );
-            }
+            console.error(
+              "Adobe identity stitching failed:",
+              error
+            );
           }
         }
       );
