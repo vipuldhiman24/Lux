@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
     <meta charset="UTF-8" />
 
     <meta
@@ -15,13 +13,14 @@
     </title>
 
     <!-- FAVICON -->
-<link 
-  rel="icon" 
-  type="image/png" 
-  href="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" 
-/>
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
+    />
 
-        <script>
+    <!-- Prehiding snippet -->
+    <script>
       !function(e,a,n,t){var i=e.head;if(i){
       if (a) return;
       var o=e.createElement("style");
@@ -29,18 +28,41 @@
       (document, document.location.href.indexOf("adobe_authoring_enabled") !== -1, ".personalization-container { opacity: 0 !important }", 3000);
     </script>
 
- <script src="https://assets.adobedtm.com/6a203c8a0ff8/cf4099258adb/launch-afaa878946c1.min.js" async></script>
-</head>
+    <!-- Adobe Tags embed code -->
+    <script src="https://assets.adobedtm.com/6a203c8a0ff8/cf4099258adb/launch-afaa878946c1.min.js" async></script>
+
+    <!-- waitForAlloyReady helper -->
+    <script>
+      window.waitForAlloyReady = async function (timeoutMs = 8000) {
+        const started = Date.now();
+
+        while (typeof window.alloy !== "function") {
+          if (Date.now() - started > timeoutMs) {
+            throw new Error("alloy did not become available in time");
+          }
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+
+        while (Date.now() - started <= timeoutMs) {
+          try {
+            await window.alloy("getLibraryInfo");
+            return window.alloy;
+          } catch (e) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+          }
+        }
+
+        throw new Error("alloy exists but is not ready in time");
+      };
+    </script>
+  </head>
 
   <body>
-
     <div id="root"></div>
 
     <script
       type="module"
       src="/src/main.jsx"
     ></script>
-
   </body>
-
 </html>
