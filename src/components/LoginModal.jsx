@@ -1,99 +1,32 @@
-import {
-  signInWithPopup,
-} from "firebase/auth";
+const login = async () => {
+  try {
+    const result = await signInWithPopup(
+      auth,
+      provider
+    );
 
-import {
-  auth,
-  provider,
-} from "../firebase/firebase";
+    const user = result.user;
 
-import { FcGoogle } from "react-icons/fc";
-
-import { motion } from "framer-motion";
-
-export default function LoginModal({
-
-  isOpen,
-  onClose,
-
-}) {
-
-  if (!isOpen) return null;
-
-  const login = async () => {
-
-    try {
-
-      await signInWithPopup(
-        auth,
-        provider
-      );
-
-      onClose();
-
-    } catch (err) {
-
-      console.log(err);
-
+    if (window.alloy && user?.email) {
+      await window.alloy("sendEvent", {
+        xdm: {
+          eventType: "user.login",
+          identityMap: {
+            "TEST-Vipul": [
+              {
+                id: user.email,
+                authenticatedState: "authenticated",
+                primary: true
+              }
+            ]
+          }
+        }
+      });
     }
-  };
 
-  return (
+    onClose();
 
-    <div className="modal-overlay">
-
-      <motion.div
-        className="login-modal"
-        initial={{
-          opacity: 0,
-          scale: 0.92,
-          y: 20,
-        }}
-        animate={{
-          opacity: 1,
-          scale: 1,
-          y: 0,
-        }}
-      >
-
-        <button
-          className="close-modal"
-          onClick={onClose}
-        >
-          ✕
-        </button>
-
-        <p className="modal-tag">
-          AUTH REQUIRED
-        </p>
-
-        <h2>
-          Login To Continue
-        </h2>
-
-        <p className="modal-text">
-
-          Sign in with Google to
-          preserve your extremely
-          important shopping decisions.
-
-        </p>
-
-        <button
-          className="modal-google-btn"
-          onClick={login}
-        >
-
-          <FcGoogle size={24} />
-
-          <span>
-            Continue with Google
-          </span>
-
-        </button>
-
-      </motion.div>
-
-    </div>
-  );
-}
+  } catch (err) {
+    console.log(err);
+  }
+};
