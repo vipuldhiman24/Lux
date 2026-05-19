@@ -3,6 +3,8 @@ const login = async () => {
   try {
 
     const result =
+    console.log("Login component triggered");
+    
       await signInWithPopup(
         auth,
         provider

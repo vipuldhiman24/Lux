@@ -15,6 +15,8 @@ export default function LoginButton() {
 
     try {
 
+      console.log("Login component triggered");
+
       const result =
         await signInWithPopup(
           auth,
