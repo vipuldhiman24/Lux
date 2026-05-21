@@ -5,9 +5,16 @@
 }
 
 body {
+
   background: #0a0a0a;
+
   color: white;
-  font-family: Arial, sans-serif;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
   overflow-x: hidden;
 }
 
@@ -16,44 +23,62 @@ body {
 }
 
 .page {
+
   padding: 40px;
+
   position: relative;
+
   z-index: 1;
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR
+========================= */
 
 .navbar {
+
   position: sticky;
+
   top: 0;
+
   z-index: 100;
 
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
 
   padding: 20px 30px;
 
-  background: rgba(255,255,255,0.05);
+  background:
+    rgba(255,255,255,0.05);
 
-  backdrop-filter: blur(16px);
+  border:
+    1px solid rgba(255,255,255,0.08);
 
-  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
 
-  border-radius: 20px;
+  backdrop-filter: blur(18px);
 
   margin-bottom: 40px;
 }
 
 .logo {
+
   font-size: 24px;
-  font-weight: bold;
+
+  font-weight: 800;
+
   cursor: pointer;
 }
 
 .nav-right {
+
   display: flex;
+
   align-items: center;
+
   gap: 14px;
 }
 
@@ -61,168 +86,149 @@ body {
 .logout-btn {
 
   background:
-    rgba(255,255,255,0.05);
-
-  color: white;
+    rgba(255,255,255,0.06);
 
   border:
     1px solid rgba(255,255,255,0.08);
 
-  padding:
-    12px 18px;
+  color: white;
+
+  padding: 12px 18px;
 
   border-radius: 999px;
 
   cursor: pointer;
 
   transition: 0.3s ease;
-
-  backdrop-filter: blur(10px);
 }
 
 .nav-btn:hover,
 .logout-btn:hover {
 
-  background:
-    rgba(255,255,255,0.1);
+  transform:
+    translateY(-2px);
 
-  transform: translateY(-2px);
+  background:
+    rgba(255,255,255,0.12);
 }
 
-/* GOOGLE BUTTON */
+/* =========================
+   GOOGLE BUTTON
+========================= */
 
 .google-btn {
+
   width: 100%;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   gap: 12px;
 
-  background: white;
-  color: black;
+  padding: 16px 20px;
 
   border: none;
 
-  padding: 16px 20px;
-
   border-radius: 18px;
 
-  font-size: 15px;
+  background: white;
+
+  color: black;
+
   font-weight: 700;
 
   cursor: pointer;
 
-  transition: all 0.3s ease;
-
-  box-shadow:
-    0 4px 20px rgba(255,255,255,0.08);
+  transition: 0.3s ease;
 }
 
 .google-btn:hover {
-  transform: translateY(-2px);
+
+  transform:
+    translateY(-2px);
 
   box-shadow:
-    0 8px 30px rgba(255,255,255,0.15);
+    0 12px 40px rgba(255,255,255,0.15);
 }
 
-/* USER PROFILE */
-
-.user-profile {
-
-  width: 46px;
-  height: 46px;
-
-  border-radius: 50%;
-
-  overflow: hidden;
-
-  border:
-    2px solid rgba(255,255,255,0.12);
-
-  background:
-    rgba(255,255,255,0.04);
-
-  backdrop-filter: blur(10px);
-
-  transition: 0.3s ease;
-
-  flex-shrink: 0;
-}
-
-.user-profile:hover {
-  transform: scale(1.05);
-}
-
-.user-profile img {
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-}
-
-/* HERO SECTION */
+/* =========================
+   HERO
+========================= */
 
 .hero-section {
-  min-height: 70vh;
+
+  min-height: 75vh;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   text-align: center;
 
-  padding: 60px 20px;
+  padding: 80px 20px;
 }
 
 .hero-tag {
-  color: #999;
+
+  color: #888;
 
   letter-spacing: 4px;
 
   font-size: 12px;
 
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .hero-section h1 {
-  font-size: 82px;
 
-  line-height: 0.95;
+  font-size: 86px;
+
+  line-height: 0.92;
 
   margin-bottom: 24px;
 
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .hero-subtext {
-  max-width: 700px;
+
+  max-width: 720px;
 
   margin: auto;
 
   color: #aaa;
 
-  font-size: 18px;
+  line-height: 1.8;
 
-  line-height: 1.7;
+  font-size: 18px;
 
   margin-bottom: 36px;
 }
 
 .hero-buttons {
+
   display: flex;
 
-  gap: 18px;
-
   justify-content: center;
+
+  gap: 18px;
 
   flex-wrap: wrap;
 }
 
+/* =========================
+   BUTTONS
+========================= */
+
 .primary-btn {
+
   background: white;
+
   color: black;
 
   border: none;
@@ -231,42 +237,60 @@ body {
 
   border-radius: 999px;
 
-  font-weight: bold;
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .primary-btn:hover {
-  transform: translateY(-2px);
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 16px 40px rgba(255,255,255,0.12);
 }
 
 .secondary-btn {
-  background: rgba(255,255,255,0.05);
+
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
 
   color: white;
-
-  border: 1px solid rgba(255,255,255,0.1);
 
   padding: 16px 28px;
 
   border-radius: 999px;
 
-  backdrop-filter: blur(10px);
-
   cursor: pointer;
 
   transition: 0.3s ease;
+
+  backdrop-filter: blur(12px);
 }
 
 .secondary-btn:hover {
-  transform: translateY(-2px);
+
+  transform:
+    translateY(-3px);
+
+  background:
+    rgba(255,255,255,0.1);
 }
 
-/* PRODUCT GRID */
+/* =========================
+   PRODUCT GRID
+========================= */
 
 .grid {
+
   display: grid;
 
   grid-template-columns:
@@ -275,25 +299,37 @@ body {
   gap: 24px;
 }
 
-/* PRODUCT CARD */
+/* =========================
+   PRODUCT CARD
+========================= */
 
 .card {
-  background: rgba(255,255,255,0.05);
 
-  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    rgba(255,255,255,0.05);
 
-  backdrop-filter: blur(12px);
+  border:
+    1px solid rgba(255,255,255,0.08);
 
-  border-radius: 28px;
+  border-radius: 30px;
 
   padding: 20px;
 
-  transition: all 0.3s ease;
+  backdrop-filter: blur(18px);
+
+  transition: 0.35s ease;
 
   overflow: hidden;
 }
 
+.card:hover {
+
+  transform:
+    translateY(-6px);
+}
+
 .card img {
+
   width: 100%;
 
   height: 240px;
@@ -302,28 +338,33 @@ body {
 
   border-radius: 20px;
 
-  transition: transform 0.4s ease;
-
   cursor: pointer;
+
+  transition: 0.45s ease;
 }
 
 .card:hover img {
-  transform: scale(1.04);
+
+  transform:
+    scale(1.04);
 }
 
 .card h2 {
+
   margin-top: 18px;
 
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .card p {
+
   margin-top: 8px;
 
-  color: #bbb;
+  color: #aaa;
 }
 
 .card > button {
+
   width: 100%;
 
   margin-top: 18px;
@@ -332,24 +373,20 @@ body {
 
   border: none;
 
-  border-radius: 16px;
+  border-radius: 18px;
 
   background: white;
 
   color: black;
 
-  font-weight: bold;
+  font-weight: 700;
 
   cursor: pointer;
-
-  transition: all 0.25s ease;
 }
 
-.card button:hover {
-  transform: translateY(-2px);
-}
-
-/* QUANTITY BOX */
+/* =========================
+   QUANTITY BOX
+========================= */
 
 .quantity-box {
 
@@ -363,15 +400,15 @@ body {
 
   gap: 12px;
 
-  background:
-    rgba(255,255,255,0.06);
-
-  border:
-    1px solid rgba(255,255,255,0.08);
+  padding: 10px 14px;
 
   border-radius: 18px;
 
-  padding: 10px 14px;
+  background:
+    rgba(255,255,255,0.05);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
 }
 
 .quantity-box button {
@@ -382,7 +419,7 @@ body {
 
   border: none;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
   background:
     rgba(255,255,255,0.08);
@@ -393,42 +430,45 @@ body {
 
   cursor: pointer;
 
-  transition: 0.3s ease;
+  transition: 0.25s ease;
 }
 
 .quantity-box button:hover {
 
   background:
-    rgba(255,255,255,0.14);
+    rgba(255,255,255,0.15);
 }
 
 .quantity-box span {
 
   font-size: 18px;
 
-  font-weight: bold;
+  font-weight: 700;
 }
 
-/* LOGIN MODAL */
+/* =========================
+   LOGIN MODAL
+========================= */
 
 .modal-overlay {
 
   position: fixed;
 
-  top: 0;
-  left: 0;
+  inset: 0;
 
   width: 100vw;
+
   height: 100vh;
 
   background:
-    rgba(0,0,0,0.75);
+    rgba(0,0,0,0.72);
 
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(14px);
 
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   z-index: 999999;
@@ -447,36 +487,32 @@ body {
   border-radius: 36px;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.08),
-      rgba(255,255,255,0.04)
-    );
+    rgba(18,18,18,0.92);
 
   border:
     1px solid rgba(255,255,255,0.08);
 
-  backdrop-filter: blur(24px);
+  text-align: center;
 
   box-shadow:
     0 30px 80px rgba(0,0,0,0.45);
-
-  text-align: center;
 }
 
 .close-modal {
 
   position: absolute;
 
-  top: 18px;
-  right: 18px;
+  top: 16px;
+
+  right: 16px;
 
   width: 42px;
+
   height: 42px;
 
-  border-radius: 50%;
-
   border: none;
+
+  border-radius: 50%;
 
   background:
     rgba(255,255,255,0.08);
@@ -485,22 +521,21 @@ body {
 
   cursor: pointer;
 
-  font-size: 18px;
-
   transition: 0.3s ease;
 }
 
 .close-modal:hover {
 
-  background:
-    rgba(255,255,255,0.14);
+  transform:
+    rotate(90deg);
 
-  transform: rotate(90deg);
+  background:
+    rgba(255,255,255,0.15);
 }
 
 .modal-tag {
 
-  color: #8d8d8d;
+  color: #777;
 
   letter-spacing: 4px;
 
@@ -513,108 +548,6 @@ body {
 
   font-size: 48px;
 
-  line-height: 1;
-
-  margin-bottom: 20px;
-}
-
-.modal-text {
-
-  color: #9f9f9f;
-
-  line-height: 1.8;
-
-  font-size: 16px;
-
-  margin-bottom: 40px;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 900px) {
-
-  .hero-section h1 {
-    font-size: 56px;
-  }
-
-  .navbar {
-    padding: 16px 20px;
-  }
-
-  .page {
-    padding: 20px;
-  }
-
-  .login-modal {
-    padding: 42px 28px;
-  }
-
-  .login-modal h2 {
-    font-size: 36px;
-  }
-
-
-
-  .modal-overlay {
-
-  position: fixed;
-
-  inset: 0;
-
-  width: 100vw;
-  height: 100vh;
-
-  background:
-    rgba(0,0,0,0.72);
-
-  backdrop-filter: blur(10px);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  z-index: 999999999;
-}
-
-.login-modal {
-
-  width: 92%;
-  max-width: 500px;
-
-  padding: 50px 40px;
-
-  border-radius: 30px;
-
-  background:
-    rgba(18,18,18,0.92);
-
-  border:
-    1px solid rgba(255,255,255,0.08);
-
-  box-shadow:
-    0 30px 80px rgba(0,0,0,0.45);
-
-  position: relative;
-
-  text-align: center;
-}
-
-.modal-tag {
-
-  color: #777;
-
-  font-size: 12px;
-
-  letter-spacing: 4px;
-
-  margin-bottom: 20px;
-}
-
-.login-modal h2 {
-
-  font-size: 46px;
-
   margin-bottom: 18px;
 }
 
@@ -622,175 +555,125 @@ body {
 
   color: #aaa;
 
-  line-height: 1.7;
+  line-height: 1.8;
 
   margin-bottom: 36px;
 }
 
-.close-modal {
-
-  position: absolute;
-
-  top: 16px;
-  right: 16px;
-
-  width: 42px;
-  height: 42px;
-
-  border-radius: 50%;
-
-  border: none;
-
-  background:
-    rgba(255,255,255,0.08);
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 18px;
-
-  transition: 0.3s ease;
-}
-
-.close-modal:hover {
-
-  background:
-    rgba(255,255,255,0.14);
-
-  transform: rotate(90deg);
-}
 /* =========================
-   PRODUCT DETAILS PAGE
+   PDP
 ========================= */
 
 .pdp {
+
   display: flex;
-  gap: 60px;
-  padding: 60px;
+
   align-items: center;
+
   justify-content: center;
-  min-height: calc(100vh - 80px);
+
+  gap: 80px;
+
   max-width: 1400px;
+
   margin: auto;
-  color: white;
+
+  min-height: calc(100vh - 120px);
+
+  padding: 60px;
 }
 
 .pdp-image {
+
   flex: 1;
+
   display: flex;
+
   justify-content: center;
-  align-items: center;
 }
 
 .pdp-image img {
+
   width: 100%;
+
   max-width: 520px;
-  border-radius: 32px;
-  background: #111;
+
   padding: 40px;
+
   object-fit: contain;
-  transition: 0.4s ease;
+
+  border-radius: 36px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
+
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.45),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
+    0 30px 80px rgba(0,0,0,0.45);
 }
 
 .pdp-image img:hover {
-  transform: scale(1.03) rotate(-1deg);
+
+  transform:
+    scale(1.03)
+    rotate(-1deg);
 }
 
 .pdp-content {
+
   flex: 1;
-  max-width: 520px;
+
+  max-width: 560px;
 }
 
 .pdp-category {
-  font-size: 13px;
-  letter-spacing: 2px;
+
+  color: #7f7f7f;
+
+  letter-spacing: 4px;
+
+  font-size: 12px;
+
+  margin-bottom: 18px;
+
   text-transform: uppercase;
-  color: #8b8b8b;
-  margin-bottom: 14px;
 }
 
 .pdp-content h1 {
-  font-size: 56px;
-  line-height: 1;
+
+  font-size: 72px;
+
+  line-height: 0.95;
+
   margin-bottom: 24px;
-  font-weight: 700;
+
+  font-weight: 900;
 }
 
 .pdp-description {
-  color: #a5a5a5;
-  line-height: 1.8;
-  font-size: 16px;
-  margin-bottom: 32px;
+
+  color: #aaa;
+
+  line-height: 1.9;
+
+  font-size: 17px;
+
+  margin-bottom: 34px;
 }
 
 .pdp-price {
-  font-size: 42px;
-  font-weight: 700;
-  margin-bottom: 36px;
-}
 
-/* =========================
-   BUTTONS
-========================= */
+  font-size: 52px;
 
-.primary-btn {
-  background: white;
-  color: black;
-  border: none;
-  padding: 16px 30px;
-  border-radius: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
+  font-weight: 800;
 
-.primary-btn:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
-
-/* =========================
-   QUANTITY BOX
-========================= */
-
-.quantity-box {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  background: #111;
-  width: fit-content;
-  padding: 10px 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.quantity-box button {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  border: none;
-  background: white;
-  color: black;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.quantity-box button:hover {
-  transform: scale(1.08);
-}
-
-.quantity-box span {
-  min-width: 20px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 600;
+  margin-bottom: 38px;
 }
 
 /* =========================
@@ -798,11 +681,15 @@ body {
 ========================= */
 
 .loading {
+
   min-height: 100vh;
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
-  color: white;
+
   font-size: 24px;
 }
 
@@ -812,23 +699,65 @@ body {
 
 @media (max-width: 900px) {
 
+  .page {
+
+    padding: 20px;
+  }
+
+  .navbar {
+
+    padding: 16px 20px;
+  }
+
+  .hero-section h1 {
+
+    font-size: 56px;
+  }
+
+  .hero-subtext {
+
+    font-size: 16px;
+  }
+
   .pdp {
+
     flex-direction: column;
-    padding: 30px 20px 60px;
-    gap: 40px;
+
+    gap: 50px;
+
+    padding:
+      20px 20px 60px;
+  }
+
+  .pdp-content {
+
+    max-width: 100%;
   }
 
   .pdp-content h1 {
-    font-size: 42px;
+
+    font-size: 48px;
   }
 
   .pdp-price {
-    font-size: 32px;
+
+    font-size: 38px;
   }
 
   .pdp-image img {
+
     max-width: 100%;
+
     padding: 28px;
   }
-}
+
+  .login-modal {
+
+    padding: 42px 28px;
+  }
+
+  .login-modal h2 {
+
+    font-size: 38px;
+  }
 }

@@ -77,25 +77,54 @@ export default function ProductDetails() {
       <Navbar />
 
       <motion.div
-        className="pdp"
-        initial={{
-          opacity: 0,
-          y: 30,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-      >
+  className="pdp"
 
-        <div className="pdp-image">
+  initial={{
+    opacity: 0,
+    y: 50,
+    scale: 0.98,
+    filter: "blur(8px)"
+  }}
+
+  animate={{
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)"
+  }}
+
+  transition={{
+    duration: 0.9,
+    ease: [0.22, 1, 0.36, 1]
+  }}
+>
+<motion.div
+  className="pdp-image"
+
+  initial={{
+    opacity: 0,
+    x: -60,
+    rotate: -4
+  }}
+
+  animate={{
+    opacity: 1,
+    x: 0,
+    rotate: 0
+  }}
+
+  transition={{
+    duration: 1,
+    ease: [0.22, 1, 0.36, 1]
+  }}
+>
 
           <img
             src={product.thumbnail}
             alt={product.title}
           />
 
-        </div>
+       </motion.div>
 
         <div className="pdp-content">
 
