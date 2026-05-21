@@ -17,13 +17,7 @@ import {
   decreaseQuantity,
 } from "../store/cartSlice";
 
-import {
-  auth,
-} from "../firebase/firebase";
-
 import Navbar from "../components/Navbar";
-
-import LoginModal from "../components/LoginModal";
 
 import api from "../services/api";
 
@@ -42,12 +36,6 @@ export default function ProductDetails() {
   const [product, setProduct] =
     useState(null);
 
-  const [user, setUser] =
-    useState(null);
-
-  const [showModal, setShowModal] =
-    useState(false);
-
   useEffect(() => {
 
     api.get(`/products/${id}`)
@@ -61,21 +49,6 @@ export default function ProductDetails() {
       );
 
   }, [id]);
-
-  useEffect(() => {
-
-    const unsubscribe =
-      auth.onAuthStateChanged(
-        (currentUser) => {
-
-          setUser(currentUser);
-
-        }
-      );
-
-    return () => unsubscribe();
-
-  }, []);
 
   if (!product) {
 
@@ -93,13 +66,6 @@ export default function ProductDetails() {
     );
 
   const handleAddToCart = () => {
-
-    if (!user) {
-
-      setShowModal(true);
-
-      return;
-    }
 
     dispatch(addToCart(product));
   };
@@ -191,13 +157,6 @@ export default function ProductDetails() {
         </div>
 
       </motion.div>
-
-      <LoginModal
-        isOpen={showModal}
-        onClose={() =>
-          setShowModal(false)
-        }
-      />
 
     </div>
   );

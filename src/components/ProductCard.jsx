@@ -62,17 +62,21 @@ export default function ProductCard({
         item.id === product.id
     );
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e) => {
 
-    if (!user) {
+  e.stopPropagation();
 
-      openLoginModal();
+  if (!user) {
 
-      return;
-    }
+    alert(
+      "Please login to access the cart."
+    );
 
-    dispatch(addToCart(product));
-  };
+    return;
+  }
+
+  dispatch(addToCart(product));
+};
 
   return (
 
@@ -112,16 +116,25 @@ export default function ProductCard({
 
       {existingItem ? (
 
-        <div className="quantity-box">
+        <div
+          className="quantity-box"
+          onClick={(e) =>
+            e.stopPropagation()
+          }
+        >
 
           <button
-            onClick={() =>
+            onClick={(e) => {
+
+              e.stopPropagation();
+
               dispatch(
                 decreaseQuantity(
                   product.id
                 )
-              )
-            }
+              );
+
+            }}
           >
             −
           </button>
@@ -141,9 +154,10 @@ export default function ProductCard({
       ) : (
 
         <button
+          className="primary-btn"
           onClick={handleAddToCart}
         >
-          Add to Cart
+          Add To Cart
         </button>
 
       )}

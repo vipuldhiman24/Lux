@@ -1,42 +1,117 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../firebase/firebase";
+import { useState } from "react";
 
-export default function LoginModal({ onClose }) {
-  console.log("LoginModal rendered");
+import { createPortal } from "react-dom";
+
+import { signInWithPopup } from "firebase/auth";
+
+import {
+  auth,
+  provider,
+} from "../firebase/firebase";
+
+import LoginButton from "./LoginButton";
+
+export default function LoginModal({
+  isOpen,
+  onClose,
+}) {
+
+  const [loading, setLoading] =
+    useState(false);
+
+  if (!isOpen) return null;
 
   const login = async () => {
-    alert("login() started");
-    console.log("login() started");
 
     try {
-      const result = await signInWithPopup(auth, provider);
+
+      setLoading(true);
+
+      const result =
+        await signInWithPopup(
+          auth,
+          provider
+        );
+
       const user = result.user;
 
-      console.log("Google login completed successfully");
-      console.log("Firebase user email:", user?.email);
+      if (!user?.email) return;
+
+      const normalizedEmail =
+        user.email
+          .trim()
+          .toLowerCase();
+
+      window.adobeLoginEmail =
+        normalizedEmail;
+
+      setTimeout(() => {
+
+        document.dispatchEvent(
+          new CustomEvent(
+            "google-login-success",
+            {
+              bubbles: true,
+              detail: {
+                email:
+                  normalizedEmail,
+                provider:
+                  "google"
+              }
+            }
+          )
+        );
+
+      }, 100);
 
       onClose?.();
+
     } catch (err) {
-      console.error("Login Error:", err);
+
+      console.error(err);
+
+    } finally {
+
+      setLoading(false);
+
     }
   };
 
-  return (
-    <div style={{ padding: "20px", background: "white", zIndex: 9999 }}>
-      <button
-        type="button"
-        onClick={login}
-        style={{
-          padding: "12px 18px",
-          background: "black",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-        }}
-      >
-        Continue with Google
-      </button>
-    </div>
+  return createPortal(
+
+    <div className="modal-overlay">
+
+      <div className="login-modal">
+
+        <button
+          className="close-modal"
+          onClick={onClose}
+        >
+          ✕
+        </button>
+
+        <p className="modal-tag">
+          SECURE LOGIN
+        </p>
+
+        <h2>
+          Welcome Back
+        </h2>
+
+        <p className="modal-text">
+          Continue with Google to
+          access your cart.
+        </p>
+
+        <LoginButton
+          onClick={login}
+          loading={loading}
+        />
+
+      </div>
+
+    </div>,
+
+    document.body
   );
 }

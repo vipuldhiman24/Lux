@@ -8,19 +8,15 @@ import Hero from "../components/Hero";
 
 import ProductCard from "../components/ProductCard";
 
-import LoginModal from "../components/LoginModal";
-
 export default function Home() {
 
   const [products, setProducts] =
     useState([]);
 
-  const [showModal, setShowModal] =
-    useState(false);
-
   useEffect(() => {
 
-    api.get("/products")
+    api
+      .get("/products")
       .then((res) => {
 
         setProducts(
@@ -49,21 +45,11 @@ export default function Home() {
           <ProductCard
             key={product.id}
             product={product}
-            openLoginModal={() =>
-              setShowModal(true)
-            }
           />
 
         ))}
 
       </div>
-
-      <LoginModal
-        isOpen={showModal}
-        onClose={() =>
-          setShowModal(false)
-        }
-      />
 
     </div>
   );

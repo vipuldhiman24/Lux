@@ -1,66 +1,28 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../firebase/firebase";
 import { FcGoogle } from "react-icons/fc";
 
-export default function LoginButton({ onClose }) {
-  const login = async () => {
-    try {
-      console.log("Login started");
-
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      console.log("User logged in:", user?.email);
-
-      if (!user?.email) {
-        console.log("No user email found");
-        return;
-      }
-
-      if (!window.alloy) {
-        console.error("window.alloy is not available");
-        return;
-      }
-
-      // If you really need a custom ready helper, keep it.
-      // But first make sure it actually resolves.
-      if (window.waitForAlloyReady) {
-        await window.waitForAlloyReady();
-      }
-
-      console.log("Alloy is ready, sending login event");
-
-      const response = await window.alloy("sendEvent", {
-        renderDecisions: true,
-        xdm: {
-          eventType: "user.login",
-          identityMap: {
-            "TEST-Vipul": [
-              {
-                id: user.email,
-                authenticatedState: "authenticated",
-                primary: true,
-              },
-            ],
-          },
-        },
-        data: {
-          debugEvent: "google-login",
-        },
-      });
-
-      console.log("Adobe identity sent successfully", response);
-
-      onClose?.();
-    } catch (err) {
-      console.error("Login Error:", err);
-    }
-  };
-
+export default function LoginButton({ onClick, loading = false }) {
   return (
-    <button onClick={login} className="google-btn">
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={loading}
+      className="google-btn"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        padding: "12px 18px",
+        background: "white",
+        color: "black",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        cursor: loading ? "not-allowed" : "pointer",
+        fontSize: "16px",
+        fontWeight: 500,
+      }}
+    >
       <FcGoogle size={22} />
-      <span>Continue with Google</span>
+      <span>{loading ? "Signing in..." : "Continue with Google"}</span>
     </button>
   );
 }
