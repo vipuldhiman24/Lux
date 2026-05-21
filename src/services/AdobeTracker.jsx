@@ -19,7 +19,7 @@ export default function AdobeTracker() {
       )
     ) {
 
-      viewName = "/products";
+      viewName = "products";
     }
 
     // normalize cart
@@ -27,7 +27,7 @@ export default function AdobeTracker() {
       location.pathname === "/cart"
     ) {
 
-      viewName = "/cart";
+      viewName = "cart";
     }
 
     // normalize home
@@ -35,7 +35,7 @@ export default function AdobeTracker() {
       location.pathname === "/"
     ) {
 
-      viewName = "/home";
+      viewName = "home";
     }
 
     window.alloy("sendEvent", {
