@@ -12,8 +12,10 @@ import {
 import LoginButton from "./LoginButton";
 
 export default function LoginModal({
+
   isOpen,
   onClose,
+
 }) {
 
   const [loading, setLoading] =
@@ -45,26 +47,31 @@ export default function LoginModal({
       window.adobeLoginEmail =
         normalizedEmail;
 
-      setTimeout(() => {
+      document.dispatchEvent(
 
-        document.dispatchEvent(
-          new CustomEvent(
-            "google-login-success",
-            {
-              bubbles: true,
-              detail: {
-                email:
-                  normalizedEmail,
-                provider:
-                  "google"
-              }
+        new CustomEvent(
+          "google-login-success",
+          {
+
+            bubbles: true,
+
+            detail: {
+
+              email:
+                normalizedEmail,
+
+              provider:
+                "google"
             }
-          )
-        );
-
-      }, 100);
+          }
+        )
+      );
 
       onClose?.();
+
+      // reload so Target
+      // reevaluates fully
+      window.location.reload();
 
     } catch (err) {
 
@@ -73,7 +80,6 @@ export default function LoginModal({
     } finally {
 
       setLoading(false);
-
     }
   };
 

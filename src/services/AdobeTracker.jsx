@@ -2,6 +2,8 @@ import { useEffect } from "react";
 
 import { useLocation } from "react-router-dom";
 
+import { auth } from "../firebase/firebase";
+
 export default function AdobeTracker() {
 
   const location = useLocation();
@@ -10,7 +12,16 @@ export default function AdobeTracker() {
 
     if (!window.alloy) return;
 
-    let viewName = location.pathname;
+    const user =
+      auth.currentUser;
+
+    const userEmail =
+      user?.email
+        ?.trim()
+        .toLowerCase();
+
+    let viewName =
+      location.pathname;
 
     // normalize product pages
     if (
@@ -38,23 +49,61 @@ export default function AdobeTracker() {
       viewName = "home";
     }
 
-    window.alloy("sendEvent", {
+    setTimeout(() => {
 
-      renderDecisions: true,
+      const payload = {
 
-      xdm: {
-        web: {
-          webPageDetails: {
-            viewName
+        renderDecisions: true,
+
+        xdm: {
+
+          web: {
+
+            webPageDetails: {
+
+              viewName
+            }
           }
-        }
-      }
-    });
+        },
 
-    console.log(
-      "Adobe SPA view tracked:",
-      viewName
-    );
+        data: {
+
+          isLoggedIn:
+            !!userEmail
+        }
+      };
+
+      // authenticated identity
+      if (userEmail) {
+
+        payload.xdm.identityMap = {
+
+          "TEST-Vipul": [
+
+            {
+
+              id: userEmail,
+
+              authenticatedState:
+                "authenticated",
+
+              primary: false
+            }
+          ]
+        };
+      }
+
+      console.log(
+        "ADOBE PAYLOAD:",
+        payload
+      );
+
+      window.alloy(
+        "sendEvent",
+        payload
+      );
+
+    }, 300);
 
   }, [location.pathname]);
 
