@@ -1,22 +1,64 @@
-import { useEffect } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
-import { useLocation } from "react-router-dom";
+import {
+  useLocation,
+} from "react-router-dom";
 
-import { auth } from "../firebase/firebase";
+import {
+  auth,
+} from "../firebase/firebase";
+
+import {
+  onAuthStateChanged,
+} from "firebase/auth";
 
 export default function AdobeTracker() {
 
   const location =
     useLocation();
 
+  const [
+    authReady,
+    setAuthReady
+  ] = useState(false);
+
+  const [
+    currentUser,
+    setCurrentUser
+  ] = useState(null);
+
+  // wait for firebase auth restore
+  useEffect(() => {
+
+    const unsubscribe =
+      onAuthStateChanged(
+        auth,
+        (user) => {
+
+          setCurrentUser(user);
+
+          setAuthReady(true);
+        }
+      );
+
+    return () => unsubscribe();
+
+  }, []);
+
+  // track ONLY after auth ready
   useEffect(() => {
 
     if (!window.alloy) return;
 
+    if (!authReady) return;
+
     let viewName =
       location.pathname;
 
-    // normalize product pages
+    // normalize PDP
     if (
       location.pathname.startsWith(
         "/product/"
@@ -42,11 +84,8 @@ export default function AdobeTracker() {
       viewName = "home";
     }
 
-    const user =
-      auth.currentUser;
-
     const userEmail =
-      user?.email
+      currentUser?.email
         ?.trim()
         ?.toLowerCase();
 
@@ -97,16 +136,16 @@ export default function AdobeTracker() {
       payload
     );
 
-    setTimeout(() => {
+    window.alloy(
+      "sendEvent",
+      payload
+    );
 
-      window.alloy(
-        "sendEvent",
-        payload
-      );
-
-    }, 300);
-
-  }, [location.pathname]);
+  }, [
+    authReady,
+    currentUser,
+    location.pathname
+  ]);
 
   return null;
 }
