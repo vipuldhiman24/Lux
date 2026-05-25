@@ -28,7 +28,14 @@
       (document, document.location.href.indexOf("adobe_authoring_enabled") !== -1, ".personalization-container { opacity: 0 !important }", 3000);
     </script>
 
-   <script src="https://assets.adobedtm.com/6a203c8a0ff8/cf4099258adb/launch-afaa878946c1.min.js" async></script>  <!-- waitForAlloyReady helper -->
+  
+<script>
+  function targetPageParams() {
+    return {
+      "at_property": "3d6ae62c-8c5b-9da5-f2c9-60553367d9d1"
+    };
+  }
+</script> <!-- waitForAlloyReady helper -->
     <script>
       window.waitForAlloyReady = async function (timeoutMs = 8000) {
         const started = Date.now();
