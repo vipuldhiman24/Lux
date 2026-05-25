@@ -6,7 +6,8 @@ import { auth } from "../firebase/firebase";
 
 export default function AdobeTracker() {
 
-  const location = useLocation();
+  const location =
+    useLocation();
 
   useEffect(() => {
 
@@ -15,15 +16,9 @@ export default function AdobeTracker() {
     const user =
       auth.currentUser;
 
-    const userEmail =
-      user?.email
-        ?.trim()
-        .toLowerCase();
-
     let viewName =
       location.pathname;
 
-    // normalize product pages
     if (
       location.pathname.startsWith(
         "/product/"
@@ -33,7 +28,6 @@ export default function AdobeTracker() {
       viewName = "products";
     }
 
-    // normalize cart
     if (
       location.pathname === "/cart"
     ) {
@@ -41,7 +35,6 @@ export default function AdobeTracker() {
       viewName = "cart";
     }
 
-    // normalize home
     if (
       location.pathname === "/"
     ) {
@@ -49,54 +42,58 @@ export default function AdobeTracker() {
       viewName = "home";
     }
 
-    setTimeout(() => {
+    const userEmail =
+      user?.email
+        ?.trim()
+        .toLowerCase();
 
-      const payload = {
+    const payload = {
 
-        renderDecisions: true,
+      renderDecisions: true,
 
-        xdm: {
+      xdm: {
 
-          web: {
+        web: {
 
-            webPageDetails: {
+          webPageDetails: {
 
-              viewName
-            }
+            viewName
           }
-        },
-
-        data: {
-
-          isLoggedIn:
-            !!userEmail
         }
-      };
+      },
 
-      // authenticated identity
-      if (userEmail) {
+      data: {
 
-        payload.xdm.identityMap = {
-
-          "TEST-Vipul": [
-
-            {
-
-              id: userEmail,
-
-              authenticatedState:
-                "authenticated",
-
-              primary: false
-            }
-          ]
-        };
+        isLoggedIn:
+          !!userEmail
       }
+    };
 
-      console.log(
-        "ADOBE PAYLOAD:",
-        payload
-      );
+    if (userEmail) {
+
+      payload.xdm.identityMap = {
+
+        GOOGLE_EMAIL: [
+
+          {
+
+            id: userEmail,
+
+            authenticatedState:
+              "authenticated",
+
+            primary: false
+          }
+        ]
+      };
+    }
+
+    console.log(
+      "FINAL ADOBE PAYLOAD:",
+      payload
+    );
+
+    setTimeout(() => {
 
       window.alloy(
         "sendEvent",
