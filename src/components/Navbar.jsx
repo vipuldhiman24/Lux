@@ -10,8 +10,6 @@ import { auth } from "../firebase/firebase";
 
 import { useEffect, useState } from "react";
 
-import AdobeTracker from "../services/AdobeTracker";
-
 export default function Navbar() {
 
   const navigate =
@@ -44,7 +42,11 @@ export default function Navbar() {
 
       await signOut(auth);
 
-      window.location.reload();
+      setTimeout(() => {
+
+        window.location.reload();
+
+      }, 500);
 
     } catch (err) {
 
@@ -55,8 +57,6 @@ export default function Navbar() {
   return (
 
     <>
-
-   
 
       <nav className="navbar">
 

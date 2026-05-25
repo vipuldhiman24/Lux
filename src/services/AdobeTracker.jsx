@@ -13,12 +13,10 @@ export default function AdobeTracker() {
 
     if (!window.alloy) return;
 
-    const user =
-      auth.currentUser;
-
     let viewName =
       location.pathname;
 
+    // normalize product pages
     if (
       location.pathname.startsWith(
         "/product/"
@@ -28,6 +26,7 @@ export default function AdobeTracker() {
       viewName = "products";
     }
 
+    // normalize cart
     if (
       location.pathname === "/cart"
     ) {
@@ -35,6 +34,7 @@ export default function AdobeTracker() {
       viewName = "cart";
     }
 
+    // normalize home
     if (
       location.pathname === "/"
     ) {
@@ -42,10 +42,13 @@ export default function AdobeTracker() {
       viewName = "home";
     }
 
+    const user =
+      auth.currentUser;
+
     const userEmail =
       user?.email
         ?.trim()
-        .toLowerCase();
+        ?.toLowerCase();
 
     const payload = {
 
@@ -69,6 +72,7 @@ export default function AdobeTracker() {
       }
     };
 
+    // authenticated identity
     if (userEmail) {
 
       payload.xdm.identityMap = {

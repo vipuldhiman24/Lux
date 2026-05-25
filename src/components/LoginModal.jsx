@@ -1,124 +1,100 @@
-import { useEffect } from "react";
+import { useState } from "react";
 
-import { useLocation } from "react-router-dom";
+import { createPortal } from "react-dom";
 
-import { auth } from "../firebase/firebase";
+import { signInWithPopup } from "firebase/auth";
 
 import {
-  onAuthStateChanged
-} from "firebase/auth";
+  auth,
+  provider,
+} from "../firebase/firebase";
 
-export default function AdobeTracker() {
+import LoginButton from "./LoginButton";
 
-  const location = useLocation();
+export default function LoginModal({
 
-  useEffect(() => {
+  isOpen,
+  onClose,
 
-    if (!window.alloy) return;
+}) {
 
-    const unsubscribe =
-      onAuthStateChanged(
-        auth,
-        (user) => {
+  const [loading, setLoading] =
+    useState(false);
 
-          let viewName =
-            location.pathname;
+  if (!isOpen) return null;
 
-          // normalize PDP
-          if (
-            location.pathname.startsWith(
-              "/product/"
-            )
-          ) {
+  const login = async () => {
 
-            viewName = "products";
-          }
+    try {
 
-          // normalize cart
-          if (
-            location.pathname === "/cart"
-          ) {
+      setLoading(true);
 
-            viewName = "cart";
-          }
+      const result =
+        await signInWithPopup(
+          auth,
+          provider
+        );
 
-          // normalize home
-          if (
-            location.pathname === "/"
-          ) {
+      const user =
+        result.user;
 
-            viewName = "home";
-          }
+      if (!user?.email) return;
 
-          const userEmail =
-            user?.email
-              ?.trim()
-              .toLowerCase();
+      onClose?.();
 
-          const payload = {
+      // give Firebase a sec
+      // before reload
+      setTimeout(() => {
 
-            renderDecisions: true,
+        window.location.reload();
 
-            xdm: {
+      }, 1200);
 
-              web: {
+    } catch (err) {
 
-                webPageDetails: {
+      console.error(err);
 
-                  viewName
-                }
-              }
-            },
+    } finally {
 
-            data: {
+      setLoading(false);
+    }
+  };
 
-              isLoggedIn:
-                !!userEmail
-            }
-          };
+  return createPortal(
 
-          // logged in identity
-          if (userEmail) {
+    <div className="modal-overlay">
 
-            payload.xdm.identityMap = {
+      <div className="login-modal">
 
-              GOOGLE_EMAIL: [
+        <button
+          className="close-modal"
+          onClick={onClose}
+        >
+          ✕
+        </button>
 
-                {
+        <p className="modal-tag">
+          SECURE LOGIN
+        </p>
 
-                  id: userEmail,
+        <h2>
+          Welcome Back
+        </h2>
 
-                  authenticatedState:
-                    "authenticated",
+        <p className="modal-text">
+          Continue with Google to
+          access your cart.
+        </p>
 
-                  primary: false
-                }
-              ]
-            };
-          }
+        <LoginButton
+          onClick={login}
+          loading={loading}
+        />
 
-          console.log(
-            "FINAL ADOBE PAYLOAD:",
-            payload
-          );
+      </div>
 
-          window.alloy(
-  "sendEvent",
-  {
-    ...payload,
+    </div>,
 
-    renderDecisions:
-      !userEmail
-        ? true
-        : false
-  }
-);
-        }
-      );
-
-    return () => unsubscribe();
-
-  }, [location.pathname]);
-
-  return null;
+    document.body
+  );
 }
