@@ -48,7 +48,7 @@ export default function AdobeTracker() {
 
   }, []);
 
-  // track ONLY after auth ready
+  // track after auth ready
   useEffect(() => {
 
     if (!window.alloy) return;
@@ -106,8 +106,16 @@ export default function AdobeTracker() {
 
       data: {
 
-        isLoggedIn:
-          !!userEmail
+        __adobe: {
+
+          target: {
+
+            "profile.isLoggedIn":
+              userEmail
+                ? "true"
+                : "false"
+          }
+        }
       }
     };
 
