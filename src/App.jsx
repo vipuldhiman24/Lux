@@ -1,3 +1,5 @@
+import AdobeTracker from "./services/AdobeTracker";
+
 export default function App() {
 
   return (
