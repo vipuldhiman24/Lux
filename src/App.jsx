@@ -1,19 +1,3 @@
-import {
-  Routes,
-  Route,
-} from "react-router-dom";
-
-import Home from "./pages/Home";
-
-import ProductDetails
-  from "./pages/ProductDetails";
-
-import CartPage
-  from "./pages/CartPage";
-
-import AdobeTracker
-  from "./services/AdobeTracker";
-
 export default function App() {
 
   return (
@@ -31,9 +15,7 @@ export default function App() {
 
         <Route
           path="/product/:id"
-          element={
-            <ProductDetails />
-          }
+          element={<ProductDetails />}
         />
 
         <Route
@@ -44,6 +26,5 @@ export default function App() {
       </Routes>
 
     </>
-
   );
 }
