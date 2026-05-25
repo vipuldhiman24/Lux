@@ -92,9 +92,15 @@ export default function Navbar() {
           ) : (
 
             <LoginButton
-              onClick={() =>
-                setShowModal(true)
-              }
+             onClick={() => {
+
+  console.log(
+    "OPENING MODAL"
+  );
+
+  setShowModal(true);
+
+}}
             />
 
           )}
