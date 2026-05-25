@@ -1,123 +1,117 @@
-import { useState } from "react";
+import { useEffect } from "react";
 
-import { createPortal } from "react-dom";
+import { useLocation } from "react-router-dom";
 
-import { signInWithPopup } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
 import {
-  auth,
-  provider,
-} from "../firebase/firebase";
+  onAuthStateChanged
+} from "firebase/auth";
 
-import LoginButton from "./LoginButton";
+export default function AdobeTracker() {
 
-export default function LoginModal({
+  const location = useLocation();
 
-  isOpen,
-  onClose,
+  useEffect(() => {
 
-}) {
+    if (!window.alloy) return;
 
-  const [loading, setLoading] =
-    useState(false);
+    const unsubscribe =
+      onAuthStateChanged(
+        auth,
+        (user) => {
 
-  if (!isOpen) return null;
+          let viewName =
+            location.pathname;
 
-  const login = async () => {
+          // normalize PDP
+          if (
+            location.pathname.startsWith(
+              "/product/"
+            )
+          ) {
 
-    try {
-
-      setLoading(true);
-
-      const result =
-        await signInWithPopup(
-          auth,
-          provider
-        );
-
-      const user = result.user;
-
-      if (!user?.email) return;
-
-      const normalizedEmail =
-        user.email
-          .trim()
-          .toLowerCase();
-
-      window.adobeLoginEmail =
-        normalizedEmail;
-
-      document.dispatchEvent(
-
-        new CustomEvent(
-          "google-login-success",
-          {
-
-            bubbles: true,
-
-            detail: {
-
-              email:
-                normalizedEmail,
-
-              provider:
-                "google"
-            }
+            viewName = "products";
           }
-        )
+
+          // normalize cart
+          if (
+            location.pathname === "/cart"
+          ) {
+
+            viewName = "cart";
+          }
+
+          // normalize home
+          if (
+            location.pathname === "/"
+          ) {
+
+            viewName = "home";
+          }
+
+          const userEmail =
+            user?.email
+              ?.trim()
+              .toLowerCase();
+
+          const payload = {
+
+            renderDecisions: true,
+
+            xdm: {
+
+              web: {
+
+                webPageDetails: {
+
+                  viewName
+                }
+              }
+            },
+
+            data: {
+
+              isLoggedIn:
+                !!userEmail
+            }
+          };
+
+          // logged in identity
+          if (userEmail) {
+
+            payload.xdm.identityMap = {
+
+              GOOGLE_EMAIL: [
+
+                {
+
+                  id: userEmail,
+
+                  authenticatedState:
+                    "authenticated",
+
+                  primary: false
+                }
+              ]
+            };
+          }
+
+          console.log(
+            "FINAL ADOBE PAYLOAD:",
+            payload
+          );
+
+          window.alloy(
+            "sendEvent",
+            payload
+          );
+        }
       );
 
-      onClose?.();
+    return () => unsubscribe();
 
-      // reload so Target
-      // reevaluates fully
-      window.location.reload();
+  }, [location.pathname]);
 
-    } catch (err) {
-
-      console.error(err);
-
-    } finally {
-
-      setLoading(false);
-    }
-  };
-
-  return createPortal(
-
-    <div className="modal-overlay">
-
-      <div className="login-modal">
-
-        <button
-          className="close-modal"
-          onClick={onClose}
-        >
-          ✕
-        </button>
-
-        <p className="modal-tag">
-          SECURE LOGIN
-        </p>
-
-        <h2>
-          Welcome Back
-        </h2>
-
-        <p className="modal-text">
-          Continue with Google to
-          access your cart.
-        </p>
-
-        <LoginButton
-          onClick={login}
-          loading={loading}
-        />
-
-      </div>
-
-    </div>,
-
-    document.body
-  );
+  return null;
 }
