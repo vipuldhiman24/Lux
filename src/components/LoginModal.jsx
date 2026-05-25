@@ -103,9 +103,16 @@ export default function AdobeTracker() {
           );
 
           window.alloy(
-            "sendEvent",
-            payload
-          );
+  "sendEvent",
+  {
+    ...payload,
+
+    renderDecisions:
+      !userEmail
+        ? true
+        : false
+  }
+);
         }
       );
 
