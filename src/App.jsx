@@ -1,3 +1,14 @@
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import Home from "./pages/Home";
+
+import ProductDetails from "./pages/ProductDetails";
+
+import CartPage from "./pages/CartPage";
+
 import AdobeTracker from "./services/AdobeTracker";
 
 export default function App() {
