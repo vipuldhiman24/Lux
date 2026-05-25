@@ -10,6 +10,7 @@ import { auth } from "../firebase/firebase";
 
 import { useEffect, useState } from "react";
 
+import AdobeTracker from "../services/AdobeTracker";
 
 export default function Navbar() {
 
