@@ -66,7 +66,7 @@ export default function Navbar() {
             navigate("/")
           }
         >
-          Random-ahh Shop
+          Pretend-Shop
         </div>
 
         <div className="nav-right">
