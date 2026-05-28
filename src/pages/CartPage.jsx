@@ -49,7 +49,7 @@ export default function CartPage() {
           </h1>
 
           <p className="cart-subtitle">
-            Financial decisions were made.
+            This is the caet Page.
           </p>
 
           {cartItems.length === 0 ? (
@@ -57,7 +57,7 @@ export default function CartPage() {
            <div className="empty-cart">
 
   <h2>
-    Your Cart Feels Emotionally Empty
+    Your Cart Seems Empty
   </h2>
 
   <p>

@@ -24,15 +24,13 @@ export default function Hero() {
 
         <h1>
           Buy Things <br />
-          You Absolutely <br />
-          Do Not Need.
+          Myabe <br />
+          Or Not
         </h1>
 
         <p className="hero-subtext">
 
-          A luxury ecommerce experience
-          powered entirely by questionable
-          consumer decisions.
+          A luxury ecommerce experience using Adobe Target 
 
         </p>
 
