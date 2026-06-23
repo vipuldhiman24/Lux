@@ -15,145 +15,56 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
+function getViewName(pathname) {
+  if (pathname === "/") return "home";
+  if (pathname === "/cart") return "cart";
+  if (pathname.startsWith("/product/")) return "products";
+  return pathname;
+}
+
 export default function AdobeTracker() {
+  const location = useLocation();
 
-  const location =
-    useLocation();
+  const [authReady, setAuthReady] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const [
-    authReady,
-    setAuthReady
-  ] = useState(false);
-
-  const [
-    currentUser,
-    setCurrentUser
-  ] = useState(null);
-
-  // wait for firebase auth restore
   useEffect(() => {
-
-    const unsubscribe =
-      onAuthStateChanged(
-        auth,
-        (user) => {
-
-          setCurrentUser(user);
-
-          setAuthReady(true);
-        }
-      );
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setAuthReady(true);
+    });
 
     return () => unsubscribe();
-
   }, []);
 
-  // track after auth ready
   useEffect(() => {
-
-    if (!window.alloy) return;
-
     if (!authReady) return;
 
-    let viewName =
-      location.pathname;
-
-    // normalize PDP
-    if (
-      location.pathname.startsWith(
-        "/product/"
-      )
-    ) {
-
-      viewName = "products";
-    }
-
-    // normalize cart
-    if (
-      location.pathname === "/cart"
-    ) {
-
-      viewName = "cart";
-    }
-
-    // normalize home
-    if (
-      location.pathname === "/"
-    ) {
-
-      viewName = "home";
-    }
+    const pathname = location.pathname;
+    const viewName = getViewName(pathname);
 
     const userEmail =
-      currentUser?.email
-        ?.trim()
-        ?.toLowerCase(); },
+      currentUser?.email?.trim()?.toLowerCase() || null;
 
-  //   const payload = {
+    window.appContext = window.appContext || {};
+    window.appContext.adobe = {
+      page: {
+        pathname,
+        viewName,
+      },
+      user: {
+        isLoggedIn: !!userEmail,
+        // optional for testing only:
+        // email: userEmail
+      },
+    };
 
-  //     renderDecisions: true,
+    console.log("window.appContext.adobe", window.appContext.adobe);
 
-  //     xdm: {
-
-  //       web: {
-
-  //         webPageDetails: {
-
-  //           viewName
-  //         }
-  //       }
-  //     },
-
-  //     data: {
-
-  //       __adobe: {
-
-  //         target: {
-
-  //           "profile.isLoggedIn":
-  //             userEmail
-  //               ? "true"
-  //               : "false"
-  //         }
-  //       }
-  //     }
-  //   };
-
-  //   // authenticated identity
-  //   if (userEmail) {
-
-  //     payload.xdm.identityMap = {
-
-  //       GOOGLE_EMAIL: [
-
-  //         {
-
-  //           id: userEmail,
-
-  //           authenticatedState:
-  //             "authenticated",
-
-  //           primary: false
-  //         }
-  //       ]
-  //     };
-  //   }
-
-  //   console.log(
-  //     "FINAL ADOBE PAYLOAD:",
-  //     payload
-  //   );
-
-  //   window.alloy(
-  //     "sendEvent",
-  //     payload
-  //   );
-
-  // }, [
-  //   authReady,
-  //   currentUser,
-  //   location.pathname
-  // ]);
+    if (window._satellite) {
+      window._satellite.track("app-tracking-context-updated");
+    }
+  }, [authReady, currentUser, location.pathname]);
 
   return null;
 }
