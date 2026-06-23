@@ -87,73 +87,73 @@ export default function AdobeTracker() {
     const userEmail =
       currentUser?.email
         ?.trim()
-        ?.toLowerCase();
+        ?.toLowerCase(); },
 
-    const payload = {
+  //   const payload = {
 
-      renderDecisions: true,
+  //     renderDecisions: true,
 
-      xdm: {
+  //     xdm: {
 
-        web: {
+  //       web: {
 
-          webPageDetails: {
+  //         webPageDetails: {
 
-            viewName
-          }
-        }
-      },
+  //           viewName
+  //         }
+  //       }
+  //     },
 
-      data: {
+  //     data: {
 
-        __adobe: {
+  //       __adobe: {
 
-          target: {
+  //         target: {
 
-            "profile.isLoggedIn":
-              userEmail
-                ? "true"
-                : "false"
-          }
-        }
-      }
-    };
+  //           "profile.isLoggedIn":
+  //             userEmail
+  //               ? "true"
+  //               : "false"
+  //         }
+  //       }
+  //     }
+  //   };
 
-    // authenticated identity
-    if (userEmail) {
+  //   // authenticated identity
+  //   if (userEmail) {
 
-      payload.xdm.identityMap = {
+  //     payload.xdm.identityMap = {
 
-        GOOGLE_EMAIL: [
+  //       GOOGLE_EMAIL: [
 
-          {
+  //         {
 
-            id: userEmail,
+  //           id: userEmail,
 
-            authenticatedState:
-              "authenticated",
+  //           authenticatedState:
+  //             "authenticated",
 
-            primary: false
-          }
-        ]
-      };
-    }
+  //           primary: false
+  //         }
+  //       ]
+  //     };
+  //   }
 
-    console.log(
-      "FINAL ADOBE PAYLOAD:",
-      payload
-    );
+  //   console.log(
+  //     "FINAL ADOBE PAYLOAD:",
+  //     payload
+  //   );
 
-    window.alloy(
-      "sendEvent",
-      payload
-    );
+  //   window.alloy(
+  //     "sendEvent",
+  //     payload
+  //   );
 
-  }, [
-    authReady,
-    currentUser,
-    location.pathname
-  ]);
+  // }, [
+  //   authReady,
+  //   currentUser,
+  //   location.pathname
+  // ]);
 
   return null;
 }
