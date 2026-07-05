@@ -44,7 +44,7 @@ export default function LoginModal({
         user.email
           .trim()
           .toLowerCase();
-
+        console.log("LOGIN SUCCESS", user.email);
       // Adobe Client Data Layer
       window.adobeDataLayer =
         window.adobeDataLayer || [];
