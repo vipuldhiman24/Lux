@@ -40,15 +40,35 @@ export default function LoginModal({
 
       if (!user?.email) return;
 
+      const email =
+        user.email
+          .trim()
+          .toLowerCase();
+
+      // Adobe Client Data Layer
+      window.adobeDataLayer =
+        window.adobeDataLayer || [];
+
+      window.adobeDataLayer.push({
+
+        event: "userLogin",
+
+        user: {
+
+          email,
+
+          isLoggedIn: true
+
+        }
+
+      });
+
+      console.log(
+        "Adobe Data Layer Event:",
+        window.adobeDataLayer
+      );
+
       onClose?.();
-
-      // give Firebase a sec
-      // before reload
-      setTimeout(() => {
-
-        window.location.reload();
-
-      }, 1200);
 
     } catch (err) {
 
@@ -57,6 +77,7 @@ export default function LoginModal({
     } finally {
 
       setLoading(false);
+
     }
   };
 
