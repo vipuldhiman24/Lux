@@ -62,6 +62,9 @@ export default function LoginModal({
         }
 
       });
+          window.adobeDataLayer.push({
+      event: "userLogin"
+    });
 
       console.log(
         "Adobe Data Layer Event:",
