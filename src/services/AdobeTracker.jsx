@@ -1,6 +1,5 @@
 import {
   useEffect,
-  useState,
 } from "react";
 
 import {
@@ -16,55 +15,131 @@ import {
 } from "firebase/auth";
 
 function getViewName(pathname) {
-  if (pathname === "/") return "home";
-  if (pathname === "/cart") return "cart";
-  if (pathname.startsWith("/product/")) return "products";
+
+  if (pathname === "/") {
+
+    return "home";
+
+  }
+
+  if (pathname === "/cart") {
+
+    return "cart";
+
+  }
+
+  if (
+    pathname.startsWith("/product/")
+  ) {
+
+    return "products";
+
+  }
+
   return pathname;
+
 }
 
 export default function AdobeTracker() {
-  const location = useLocation();
 
-  const [authReady, setAuthReady] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const location =
+    useLocation();
 
+  // Keep Adobe Client Data Layer
+  // in sync with Firebase
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setAuthReady(true);
-    });
 
-    return () => unsubscribe();
+    const unsubscribe =
+      onAuthStateChanged(
+        auth,
+        (user) => {
+
+          window.adobeDataLayer =
+            window.adobeDataLayer || [];
+
+          if (user?.email) {
+
+            window.adobeDataLayer.push({
+
+              user: {
+
+                email:
+                  user.email
+                    .trim()
+                    .toLowerCase(),
+
+                isLoggedIn: true
+
+              }
+
+            });
+
+          } else {
+
+            window.adobeDataLayer.push({
+
+              user: {
+
+                email: "",
+
+                isLoggedIn: false
+
+              }
+
+            });
+
+          }
+
+          console.log(
+            "Adobe State:",
+            window.adobeDataLayer.getState?.()
+          );
+
+        }
+      );
+
+    return () =>
+      unsubscribe();
+
   }, []);
 
+  // Push page state on every route change
   useEffect(() => {
-    if (!authReady) return;
 
-    const pathname = location.pathname;
-    const viewName = getViewName(pathname);
+    const pathname =
+      location.pathname;
 
-    const userEmail =
-      currentUser?.email?.trim()?.toLowerCase() || null;
+    const viewName =
+      getViewName(pathname);
 
-    window.appContext = window.appContext || {};
-    window.appContext.adobe = {
+    window.adobeDataLayer =
+      window.adobeDataLayer || [];
+
+    window.adobeDataLayer.push({
+
       page: {
+
         pathname,
-        viewName,
-      },
-      user: {
-        isLoggedIn: !!userEmail,
-        // optional for testing only:
-        // email: userEmail
-      },
-    };
 
-    console.log("window.appContext.adobe", window.appContext.adobe);
+        viewName
 
-    if (window._satellite) {
-      window._satellite.track("app-tracking-context-updated");
-    }
-  }, [authReady, currentUser, location.pathname]);
+      }
+
+    });
+
+    window.adobeDataLayer.push({
+
+      event: "viewChange"
+
+    });
+
+    console.log(
+      "Adobe Page:",
+      window.adobeDataLayer.getState?.()
+    );
+
+  }, [location.pathname]);
 
   return null;
+
 }
