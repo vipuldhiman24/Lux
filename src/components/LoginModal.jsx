@@ -44,14 +44,17 @@ export default function LoginModal({
         user.email
           .trim()
           .toLowerCase();
-        console.log("LOGIN SUCCESS", user.email);
-      // Adobe Client Data Layer
+
+      console.log(
+        "LOGIN SUCCESS",
+        email
+      );
+
       window.adobeDataLayer =
         window.adobeDataLayer || [];
 
+      // Update persistent state
       window.adobeDataLayer.push({
-
-        event: "userLogin",
 
         user: {
 
@@ -62,13 +65,22 @@ export default function LoginModal({
         }
 
       });
-          window.adobeDataLayer.push({
-      event: "userLogin"
-    });
+
+      // Fire login event
+      window.adobeDataLayer.push({
+
+        event: "userLogin"
+
+      });
 
       console.log(
-        "Adobe Data Layer Event:",
+        "Adobe Data Layer:",
         window.adobeDataLayer
+      );
+
+      console.log(
+        "Adobe State:",
+        window.adobeDataLayer.getState?.()
       );
 
       onClose?.();
