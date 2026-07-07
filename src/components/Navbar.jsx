@@ -66,7 +66,7 @@ export default function Navbar() {
             navigate("/")
           }
         >
-          Pretend-Shop
+          Shop
         </div>
 
         <div className="nav-right">

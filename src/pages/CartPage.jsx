@@ -49,7 +49,7 @@ export default function CartPage() {
           </h1>
 
           <p className="cart-subtitle">
-            This is the caet Page.
+            This is the cart Page.
           </p>
 
           {cartItems.length === 0 ? (
@@ -61,9 +61,7 @@ export default function CartPage() {
   </h2>
 
   <p>
-    Fortunately, we have 30 completely
-    unnecessary products available
-    to help fill the void.
+    Check out other products
   </p>
 
   <button
@@ -161,7 +159,7 @@ export default function CartPage() {
       </span>
 
       <span>
-        Emotionally expensive
+        Expensive
       </span>
 
     </div>
@@ -184,8 +182,7 @@ export default function CartPage() {
 
     <p className="summary-joke">
 
-      By continuing, you agree to
-      absolutely ignore your savings goals.
+      Lets go!
 
     </p>
 

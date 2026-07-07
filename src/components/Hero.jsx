@@ -19,18 +19,18 @@ export default function Hero() {
       >
 
         <p className="hero-tag">
-          PREMIUM DIGITAL MATERIALISM
+          PREMIUM DIGITAL 
         </p>
 
         <h1>
           Buy Things <br />
           Myabe <br />
-          Or Not
+          
         </h1>
 
         <p className="hero-subtext">
 
-          A luxury ecommerce experience using Adobe Target 
+          Using Adobe Target 
 
         </p>
 
@@ -61,7 +61,7 @@ export default function Hero() {
 
             }}
           >
-            Emotionally Recover Later
+            Random Item ?
           </button>
 
         </div>
