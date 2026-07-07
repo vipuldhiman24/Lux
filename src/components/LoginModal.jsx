@@ -53,7 +53,7 @@ export default function LoginModal({
       window.adobeDataLayer =
         window.adobeDataLayer || [];
 
-      // Update Adobe Client Data Layer state
+      // Update persistent state
       window.adobeDataLayer.push({
 
         user: {
@@ -74,19 +74,16 @@ export default function LoginModal({
       });
 
       console.log(
+        "Adobe Data Layer:",
+        window.adobeDataLayer
+      );
+
+      console.log(
         "Adobe State:",
         window.adobeDataLayer.getState?.()
       );
 
       onClose?.();
-
-      // Give Tags time to process the event,
-      // then reload so Page Top runs again.
-      setTimeout(() => {
-
-        window.location.reload();
-
-      }, 1000);
 
     } catch (err) {
 
@@ -135,6 +132,5 @@ export default function LoginModal({
     </div>,
 
     document.body
-
   );
 }
